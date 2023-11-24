@@ -13,16 +13,20 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import logo from "../../../../public/fabicon.png";
 import Logo from "../Logo/Logo";
-import { NavLink } from "react-router-dom";
-import LoginIcon from '@mui/icons-material/Login';
-import LogoutIcon from '@mui/icons-material/Logout';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import { Link, NavLink } from "react-router-dom";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import useAuth from "../../../Hooks/useAuth";
 
 function Navber() {
-  const displayName = "Sohanur Rahman";
-  const photoUrl =
-    "https://i.ibb.co/gyKbqYB/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image-5809521.png";
-  const user = {displayName,photoUrl};
+  const { user, logOut } = useAuth();
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => console.log("Sign-out successful"))
+      .catch((error) => console.log(error));
+  };
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -44,60 +48,57 @@ function Navber() {
 
   const navMenu = (
     <>
-    {
-        user && (
-            <>
-            <li>
-        <NavLink
-          to="/"
-          className={({ isActive, isPending }) =>
-            isPending ? 
-            "pending" : 
-            isActive ? 
-            "text-secondary font-bold" 
-            : ""
-          }
-        >
-          Home
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/allFood"
-          className={({ isActive, isPending }) =>
-            isPending
-              ? "pending"
-              : isActive
-              ? "text-secondary font-bold"
-              : ""
-          }
-        >
-          Our Contest
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/blog"
-          className={({ isActive, isPending }) =>
-            isPending
-              ? "pending"
-              : isActive
-              ? "text-secondary font-bold"
-              : ""
-          }
-        >
-          Blog
-        </NavLink>
-      </li>
-            </>
-        )
-    }
-      
+      {user && (
+        <>
+          <li>
+            <NavLink
+              to="/"
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? "pending"
+                  : isActive
+                  ? "text-secondary font-bold"
+                  : ""
+              }
+            >
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/allFood"
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? "pending"
+                  : isActive
+                  ? "text-secondary font-bold"
+                  : ""
+              }
+            >
+              Our Contest
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/blog"
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? "pending"
+                  : isActive
+                  ? "text-secondary font-bold"
+                  : ""
+              }
+            >
+              Blog
+            </NavLink>
+          </li>
+        </>
+      )}
     </>
   );
 
   return (
-    <AppBar sx={{ background: "#0d1a33", py:1 }} position="static">
+    <AppBar sx={{ background: "#0d1a33", py: 1 }} position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Logo></Logo>
@@ -148,7 +149,9 @@ function Navber() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              <div className="list-none px-4 space-y-3 justify-center items-center gap-5 font-montserrat">{navMenu}</div>
+              <div className="list-none px-4 space-y-3 justify-center items-center gap-5 font-montserrat">
+                {navMenu}
+              </div>
             </Menu>
           </Box>
 
@@ -172,52 +175,81 @@ function Navber() {
             CONTEST<span className="text-primary font-normal">Hub</span>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <div className="list-none flex justify-center items-center gap-5 font-montserrat">{navMenu}</div>
+            <div className="list-none flex justify-center items-center gap-5 font-montserrat">
+              {navMenu}
+            </div>
           </Box>
 
-          {
-            user ? (<Box sx={{ flexGrow: 0 }}>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt={user?.displayName} src={user.photoUrl} />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                
-                    <MenuItem >
-                      <Typography
-                        fontWeight={700}
-                        fontFamily="montserrat"
-                        textAlign="center"
-                      >
-                        {user.displayName}
-                      </Typography>
-                    </MenuItem>
-                    <MenuItem  onClick={handleCloseUserMenu}>
-                    <Button  variant="contained" fullWidth sx={{background : '#0d1a33' , fontWeight: 600,}} endIcon={<DashboardIcon/>}>Dashboard</Button>
-                    </MenuItem>
-                    <MenuItem onClick={handleCloseUserMenu}>
-                    <Button variant="contained" fullWidth sx={{background : '#0d1a33' , fontWeight: 600, }} endIcon={<LogoutIcon/>}>Sign Out</Button>
-                    </MenuItem>
-                  
-                </Menu>
-              </Box>) : (<Button variant="contained" sx={{background : '#1786F9' , fontWeight: 600}} endIcon={<LoginIcon/>}>Sign In</Button>)
-          }
+          {user ? (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar
+                    className="outline outline-2 outline-primary"
+                    alt={user?.displayName}
+                    src={user?.photoURL}
+                  />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <MenuItem>
+                  <Typography
+                    fontWeight={700}
+                    fontFamily="montserrat"
+                    textAlign="center"
+                  >
+                    {user.displayName}
+                  </Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    sx={{ background: "#0d1a33", fontWeight: 600 }}
+                    endIcon={<DashboardIcon />}
+                  >
+                    Dashboard
+                  </Button>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Button
+                    onClick={handleLogOut}
+                    variant="contained"
+                    fullWidth
+                    sx={{ background: "#0d1a33", fontWeight: 600 }}
+                    endIcon={<LogoutIcon />}
+                  >
+                    Sign Out
+                  </Button>
+                </MenuItem>
+              </Menu>
+            </Box>
+          ) : (
+            <Link to={"/login"}>
+              <Button
+                variant="contained"
+                sx={{ background: "#1786F9", fontWeight: 600 }}
+                endIcon={<LoginIcon />}
+              >
+                Sign In
+              </Button>
+            </Link>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

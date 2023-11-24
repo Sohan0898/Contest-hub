@@ -1,15 +1,15 @@
 import { Helmet } from "react-helmet-async";
-
+import Banner from "./Banner/Banner";
 
 const Home = () => {
-    return (
-        <div>
-            <Helmet>
-                <title>Contest Hub | Home </title>
-            </Helmet>
-            <h1 className="text-5xl">This is home</h1>
-        </div>
-    );
+  return (
+    <div>
+      <Helmet>
+        <title>Contest Hub | Home </title>
+      </Helmet>
+      <Banner></Banner>
+    </div>
+  );
 };
 
 export default Home;

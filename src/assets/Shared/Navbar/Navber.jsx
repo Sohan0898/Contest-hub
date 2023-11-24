@@ -1,0 +1,226 @@
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import logo from "../../../../public/fabicon.png";
+import Logo from "../Logo/Logo";
+import { NavLink } from "react-router-dom";
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+
+function Navber() {
+  const displayName = "Sohanur Rahman";
+  const photoUrl =
+    "https://i.ibb.co/gyKbqYB/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image-5809521.png";
+  const user = {displayName,photoUrl};
+
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const navMenu = (
+    <>
+    {
+        user && (
+            <>
+            <li>
+        <NavLink
+          to="/"
+          className={({ isActive, isPending }) =>
+            isPending ? 
+            "pending" : 
+            isActive ? 
+            "text-secondary font-bold" 
+            : ""
+          }
+        >
+          Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/allFood"
+          className={({ isActive, isPending }) =>
+            isPending
+              ? "pending"
+              : isActive
+              ? "text-secondary font-bold"
+              : ""
+          }
+        >
+          Our Contest
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/blog"
+          className={({ isActive, isPending }) =>
+            isPending
+              ? "pending"
+              : isActive
+              ? "text-secondary font-bold"
+              : ""
+          }
+        >
+          Blog
+        </NavLink>
+      </li>
+            </>
+        )
+    }
+      
+    </>
+  );
+
+  return (
+    <AppBar sx={{ background: "#0d1a33", py:1 }} position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Logo></Logo>
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              fontFamily: "montserrat",
+              fontWeight: 700,
+
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            CONTEST<span className="text-primary font-normal">HUB</span>
+          </Typography>
+
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: "block", md: "none" },
+              }}
+            >
+              <div className="list-none px-4 space-y-3 justify-center items-center gap-5 font-montserrat">{navMenu}</div>
+            </Menu>
+          </Box>
+
+          <img className="h-8 flex lg:hidden mr-1" src={logo} alt="" />
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              mr: 2,
+              display: { xs: "flex", md: "none" },
+              flexGrow: 1,
+              fontFamily: "montserrat",
+              fontWeight: 700,
+
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            CONTEST<span className="text-primary font-normal">Hub</span>
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <div className="list-none flex justify-center items-center gap-5 font-montserrat">{navMenu}</div>
+          </Box>
+
+          {
+            user ? (<Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt={user?.displayName} src={user.photoUrl} />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                
+                    <MenuItem >
+                      <Typography
+                        fontWeight={700}
+                        fontFamily="montserrat"
+                        textAlign="center"
+                      >
+                        {user.displayName}
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem  onClick={handleCloseUserMenu}>
+                    <Button  variant="contained" fullWidth sx={{background : '#0d1a33' , fontWeight: 600,}} endIcon={<DashboardIcon/>}>Dashboard</Button>
+                    </MenuItem>
+                    <MenuItem onClick={handleCloseUserMenu}>
+                    <Button variant="contained" fullWidth sx={{background : '#0d1a33' , fontWeight: 600, }} endIcon={<LogoutIcon/>}>Sign Out</Button>
+                    </MenuItem>
+                  
+                </Menu>
+              </Box>) : (<Button variant="contained" sx={{background : '#1786F9' , fontWeight: 600}} endIcon={<LoginIcon/>}>Sign In</Button>)
+          }
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
+}
+export default Navber;

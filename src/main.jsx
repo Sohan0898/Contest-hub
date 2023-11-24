@@ -5,12 +5,18 @@ import { RouterProvider } from "react-router-dom";
 import Router from "./Routes/Router/Router";
 import { HelmetProvider } from "react-helmet-async";
 import AuthProvider from "./Provider/AuthProvider/AuthProvider";
+import { AnimatePresence } from "framer-motion";
+
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
+  
   <React.StrictMode>
     <AuthProvider>
       <HelmetProvider>
-        <RouterProvider router={Router} />
+        <AnimatePresence>
+          <RouterProvider router={Router}/>
+        </AnimatePresence>
       </HelmetProvider>
     </AuthProvider>
   </React.StrictMode>

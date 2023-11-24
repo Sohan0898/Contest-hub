@@ -39,7 +39,7 @@ const Login = () => {
       console.log(result.user);
       reset();
       Swal.fire({
-        position: "top-end",
+        position: "top-bottom",
         icon: "success",
         title: "You Successfully Login",
         showConfirmButton: false,

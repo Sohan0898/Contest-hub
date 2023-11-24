@@ -57,7 +57,7 @@ function Navber() {
                 isPending
                   ? "pending"
                   : isActive
-                  ? "text-secondary font-bold"
+                  ? "font-semibold"
                   : ""
               }
             >
@@ -71,7 +71,7 @@ function Navber() {
                 isPending
                   ? "pending"
                   : isActive
-                  ? "text-secondary font-bold"
+                  ? "font-semibold"
                   : ""
               }
             >
@@ -85,7 +85,7 @@ function Navber() {
                 isPending
                   ? "pending"
                   : isActive
-                  ? "text-secondary font-bold"
+                  ? "font-semibold"
                   : ""
               }
             >
@@ -98,7 +98,7 @@ function Navber() {
   );
 
   return (
-    <AppBar sx={{ background: "#0d1a33", py: 1 }} position="static">
+    <AppBar sx={{ background: "#0d1a33", py: 1 , boxShadow: 'none'}} position="sticky">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Logo></Logo>
@@ -175,7 +175,7 @@ function Navber() {
             CONTEST<span className="text-primary font-normal">Hub</span>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <div className="list-none flex justify-center items-center gap-5 font-montserrat">
+            <div className="list-none ml-10 flex justify-center items-center gap-5 font-montserrat">
               {navMenu}
             </div>
           </Box>
@@ -212,6 +212,7 @@ function Navber() {
                     fontWeight={700}
                     fontFamily="montserrat"
                     textAlign="center"
+                    
                   >
                     {user.displayName}
                   </Typography>

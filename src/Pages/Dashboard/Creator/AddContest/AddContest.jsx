@@ -10,12 +10,51 @@ import {
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayJs";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 
 const AddContest = () => {
-  const { control, handleSubmit } = useForm();
+  const axiosSecure = useAxiosSecure();
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
+    const updateDate = new Date(data.contestDate).toDateString();
+    console.log("update Date:", updateDate);
+
+    const contestInfo = {
+      name: data.contestName,
+      image: data.contestPhoto,
+      price: parseFloat(data.contestPrice),
+      prize: parseFloat(data.prizeMoney),
+      tag: data.contestTag,
+      date: updateDate,
+      description: data.ContestDescription,
+      task: data.TaskSubmission,
+    };
+
+    console.log(contestInfo);
+
+    const addedContest = await axiosSecure.post("/contests", contestInfo);
+    console.log(addedContest.data);
+    if (addedContest.data.insertedId) {
+      reset();
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: `${contestInfo.name
+          .split(/\s+/)
+          .slice(0, 1)
+          .join(" ")}... is added to the Contest.`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
 
   return (
@@ -37,6 +76,7 @@ const AddContest = () => {
                   fullWidth
                   variant="filled"
                   label="Contest Name"
+                  required
                 />
               )}
             />
@@ -51,6 +91,7 @@ const AddContest = () => {
                   fullWidth
                   variant="filled"
                   label="Contest Photo"
+                  required
                 />
               )}
             />
@@ -68,6 +109,7 @@ const AddContest = () => {
                   variant="filled"
                   label="$ Contest Price"
                   type="number"
+                  required
                 />
               )}
             />
@@ -81,7 +123,8 @@ const AddContest = () => {
                   fullWidth
                   variant="filled"
                   label="$ Prize Money"
-                  type="number" 
+                  type="number"
+                  required
                 />
               )}
             />
@@ -93,6 +136,7 @@ const AddContest = () => {
               <Controller
                 name="contestTag"
                 control={control}
+                rules={{ required: "Contest Tag is required" }}
                 defaultValue=""
                 render={({ field }) => (
                   <Select {...field} label="Contest Tag">
@@ -107,19 +151,30 @@ const AddContest = () => {
                   </Select>
                 )}
               />
+              {errors.contestTag && (
+                <p className="text-red-500 text-start  font-semibold mt-1">
+                  {errors.contestTag.message}
+                </p>
+              )}
             </FormControl>
             <Controller
               name="contestDate"
               control={control}
+              rules={{ required: "Contest Date is required" }}
               render={({ field }) => (
                 <FormControl fullWidth>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                       {...field}
                       label="Select Contest Date"
-                      renderInput={(props) => <TextField {...props} />}
+                      slotProps={{ textField: { variant: "filled" } }}
                     />
                   </LocalizationProvider>
+                  {errors.contestDate && (
+                    <p className="text-red-500 text-start  font-semibold mt-1">
+                      {errors.contestDate.message}
+                    </p>
+                  )}
                 </FormControl>
               )}
             />
@@ -138,6 +193,7 @@ const AddContest = () => {
                   variant="filled"
                   fullWidth
                   label="Contest Description"
+                  required
                 />
               )}
             />
@@ -155,6 +211,7 @@ const AddContest = () => {
                   variant="filled"
                   fullWidth
                   label="Task Submission text instruction"
+                  required
                 />
               )}
             />

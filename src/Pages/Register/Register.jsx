@@ -10,9 +10,13 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import InfoIcon from "@mui/icons-material/Info";
 import GoHome from "../../assets/Shared/Go Home/GoHome";
 import { Helmet } from "react-helmet-async";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import SoicalLogin from "../../assets/Shared/SocialLogin/SoicalLogin";
 
 const Register = () => {
   const { signUpWithEmail } = useAuth();
+  const axiosPublic = useAxiosPublic();
+
   const [regError, setRegError] = useState("");
   const navigate = useNavigate();
 
@@ -63,16 +67,25 @@ const Register = () => {
         photoURL: data.photo,
       });
 
-      reset();
-      Swal.fire({
-        position: "top-right",
-        icon: "success",
-        title: `${result?.user?.displayName} Sign Up Successfully`,
-        showConfirmButton: false,
-        timer: 1500,
+      // create user entry in the database
+      const userInfo = {
+        name: data.name,
+        email: data.email,
+      };
+      axiosPublic.post("/users", userInfo).then((res) => {
+        if (res.data.insertedId) {
+          console.log("user added to the DB");
+          reset();
+          Swal.fire({
+            position: "top-bottom",
+            icon: "success",
+            title: `You Sign Up Successfully`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate("/");
+        }
       });
-
-      navigate("/");
     } catch (error) {
       console.error(error);
       setRegError(error.message);
@@ -235,12 +248,14 @@ const Register = () => {
                       type="submit"
                       className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-secondary border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700"
                     >
-                      <span className="mr-2">Sign Up</span>{" "}
-                      <SensorOccupiedIcon />
+                        <SensorOccupiedIcon />
+                      <span className="ml-2">Sign Up</span>{" "}
+                      
                     </button>
                   </div>
                 </div>
               </form>
+              <SoicalLogin></SoicalLogin>
 
               <p className="max-w-xs mx-auto mt-5 text-sm text-center text-gray-600">
                 This site is protected by the Google{" "}

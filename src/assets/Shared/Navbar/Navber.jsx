@@ -13,7 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import logo from "../../../../public/fabicon.png";
 import Logo from "../Logo/Logo";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -21,6 +21,7 @@ import useAuth from "../../../Hooks/useAuth";
 
 function Navber() {
   const { user, logOut } = useAuth();
+  const navigate = useNavigate(); 
 
   const handleLogOut = () => {
     logOut()
@@ -45,6 +46,10 @@ function Navber() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleDashboard = ()=> {
+ navigate("dashboard")
+  }
 
   const navMenu = (
     <>
@@ -219,6 +224,7 @@ function Navber() {
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
                   <Button
+                  onClick={handleDashboard}
                     variant="contained"
                     fullWidth
                     sx={{ background: "#0d1a33", fontWeight: 600 }}

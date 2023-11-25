@@ -8,7 +8,7 @@ const Root = () => {
     location.pathname.includes("login");
 
   return (
-    <div className="font-montserrat ">
+    <div>
       {noNav || <Navber></Navber>}
       <Outlet></Outlet>
     </div>

@@ -18,13 +18,18 @@ import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import useAuth from "../../../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 function Navber() {
   const { user, logOut } = useAuth();
   const navigate = useNavigate(); 
 
+
   const handleLogOut = () => {
     logOut()
+    toast.success(`${user?.displayName.split(/\s+/)
+    .slice(0, 1)
+    .join(" ")} has successfully sign-out`)
       .then(() => console.log("Sign-out successful"))
       .catch((error) => console.log(error));
   };

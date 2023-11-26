@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
-import Swal from "sweetalert2";
+
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import toast from "react-hot-toast";
 
 const SoicalLogin = () => {
 
@@ -25,23 +26,15 @@ const SoicalLogin = () => {
             .then(res =>{
                 console.log(res.data);
                 if(res.data.insertedId){
-                    Swal.fire({
-                        position: "top-bottom",
-                        icon: "success",
-                        title: "You Successfully Register",
-                        showConfirmButton: false,
-                        timer: 1500,
-                      });
+                  toast.success(`${result.user?.displayName.split(/\s+/)
+                  .slice(0, 1)
+                  .join(" ")} has successfully registered`);
                       navigate("/");
                 }
             })
-            Swal.fire({
-                position: "top-bottom",
-                icon: "success",
-                title: "You Successfully Login",
-                showConfirmButton: false,
-                timer: 1500,
-              });
+            toast.success(`${result.user?.displayName.split(/\s+/)
+            .slice(0, 1)
+            .join(" ")} has successfully signed`);
               navigate("/");
             
           })

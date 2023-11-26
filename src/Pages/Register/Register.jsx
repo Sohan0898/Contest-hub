@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import Swal from "sweetalert2";
 import { updateProfile } from "firebase/auth";
 import useAuth from "../../Hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,6 +11,7 @@ import GoHome from "../../assets/Shared/Go Home/GoHome";
 import { Helmet } from "react-helmet-async";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import SoicalLogin from "../../assets/Shared/SocialLogin/SoicalLogin";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const { signUpWithEmail } = useAuth();
@@ -78,19 +78,17 @@ const Register = () => {
         if (res.data.insertedId) {
           console.log("user added to the DB");
           reset();
-          Swal.fire({
-            position: "top-bottom",
-            icon: "success",
-            title: `You Sign Up Successfully`,
-            showConfirmButton: false,
-            timer: 1500,
-          });
+          toast.success(`${data.name.split(/\s+/)
+          .slice(0, 1)
+          .join(" ")} has successfully registered`);
           navigate("/");
         }
       });
     } catch (error) {
       console.error(error);
+      toast.error(error.message);
       setRegError(error.message);
+      
     }
   };
 

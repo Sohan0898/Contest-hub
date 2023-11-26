@@ -1,6 +1,7 @@
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { FaTrashAlt, FaUserEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
 
@@ -31,21 +32,11 @@ const AllUser = () => {
       .patch(`/users/updateRole/${user._id}`, { role: selectedRole })
       .then((res) => {
         refetch();
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: res.data.message,
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        toast.success(res.data.message);
       })
       .catch((error) => {
         console.error("Error updating role:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-        });
+        toast.error("Already had this role");
       });
   };
 
@@ -63,10 +54,10 @@ const AllUser = () => {
         axiosSecure.delete(`/users/${user._id}`).then((res) => {
           if (res.data.deletedCount > 0) {
             refetch();
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
+            toast(`"${user.name.split(/\s+/)
+            .slice(0, 1)
+            .join(" ")}" has been succesfully removed`, {
+              icon: '❎',
             });
           }
         });

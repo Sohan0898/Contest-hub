@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Swal from "sweetalert2";
+
 
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import { Helmet } from "react-helmet-async";
 import useAuth from "../../Hooks/useAuth";
 import SoicalLogin from "../../assets/Shared/SocialLogin/SoicalLogin";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const { signInWithEmail } = useAuth();
@@ -39,17 +40,15 @@ const Login = () => {
 
       console.log(result.user);
       reset();
-      Swal.fire({
-        position: "top-bottom",
-        icon: "success",
-        title: "You Successfully Login",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      toast.success(`${result?.user?.displayName.split(/\s+/)
+      .slice(0, 1)
+      .join(" ")} has successfully signed`);
       navigate("/");
     } catch (error) {
       console.error(error);
+      toast.error(error.message);
       setError("password", { type: "manual", message: error.message });
+
     }
   };
 

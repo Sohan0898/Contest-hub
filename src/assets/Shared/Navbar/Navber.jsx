@@ -51,6 +51,28 @@ function Navber() {
  navigate("dashboard")
   }
 
+
+  //scrollToShadow
+
+  const [hasShadow, setHasShadow] = React.useState(false);
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const scrollThreshold = 50;
+      const shouldHaveShadow = window.scrollY > scrollThreshold;
+
+      if (shouldHaveShadow !== hasShadow) {
+        setHasShadow(shouldHaveShadow);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [hasShadow]);
+
+
   const navMenu = (
     <>
       {user && (
@@ -103,7 +125,7 @@ function Navber() {
   );
 
   return (
-    <AppBar sx={{ background: "#0d1a33", py: 1 , boxShadow: 'none'}} position="sticky">
+    <AppBar sx={{ background: "#0d1a33", py: 1 , boxShadow: hasShadow ? '0px 4px 10px rgba(0, 0, 0, 0.1)' : 'none', zIndex: 10,}} position="sticky">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Logo></Logo>

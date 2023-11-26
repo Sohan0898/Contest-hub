@@ -4,9 +4,18 @@ import { GoHomeFill } from "react-icons/go";
 import { FaUsers } from "react-icons/fa";
 import { AiOutlineRollback } from "react-icons/ai";
 import { MdAddToPhotos } from "react-icons/md";
-
+import { IoCreateSharp } from "react-icons/io5";
+import { RiTaskFill } from "react-icons/ri";
+import { MdManageHistory } from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
+import { AiOutlineFileDone } from "react-icons/ai";
+import { FaTrophy } from "react-icons/fa";
 
 const DashBoard = () => {
+  const isAdmin = true;
+
+  const isCreator = false;
+
   return (
     <div>
       <div className="flex">
@@ -22,48 +31,95 @@ const DashBoard = () => {
               CONTEST<span className="text-primary font-normal">Hub</span>
             </h1>{" "}
           </div>
-          <ul className="menu mt-8 lg:p-4 text-xl  md:text-sm lg:text-lg text-white">
+          <ul className="menu mt-8 lg:p-4 text-xl  md:text-sm lg:text-md text-white">
             {/* routes */}
-            <li className="mx-auto lg:mx-0">
-              <NavLink to="/dashboard/adminHome">
-                <GoHomeFill ></GoHomeFill>
-                <h1 className="hidden md:flex">Admin Home</h1>
-              </NavLink>
-            </li>
-            <li className="mx-auto lg:mx-0">
-              <NavLink to="/dashboard/creatorHome">
-                <GoHomeFill ></GoHomeFill>
-                <h1 className="hidden md:flex">Creator Home</h1>
-              </NavLink>
-            </li>
-            <li className="mx-auto lg:mx-0">
-              <NavLink to="/dashboard/userHome">
-                <GoHomeFill ></GoHomeFill>
-                <h1 className="hidden md:flex">User Home</h1>
-              </NavLink>
-            </li>
-            
-            <li className="mx-auto lg:mx-0">
-              <NavLink to="/dashboard/allUser">
-              <FaUsers></FaUsers>
-                <h1 className="hidden md:flex">Users</h1>
-              </NavLink>
-            </li>
 
-            <li className="mx-auto lg:mx-0">
+            {isAdmin ? (
+              // Admin
+              <>
+                <li className="mx-auto md:mx-0">
+                  <NavLink to="/dashboard/adminHome">
+                    <GoHomeFill></GoHomeFill>
+                    <h1 className="hidden md:flex">Admin Home</h1>
+                  </NavLink>
+                </li>
+                <li className="mx-auto md:mx-0">
+                  <NavLink to="/dashboard/allUser">
+                    <FaUsers></FaUsers>
+                    <h1 className="hidden md:flex">Manage Users</h1>
+                  </NavLink>
+                </li>
+                <li className="mx-auto md:mx-0">
+                  <NavLink to="/dashboard/manageContest">
+                    <MdManageHistory></MdManageHistory>
+                    <h1 className="hidden md:flex">Manage Contest</h1>
+                  </NavLink>
+                </li>
+              </>
+            ) : isCreator ? (
+              <>
+                {/* creator*/}
+                <li className="mx-auto md:mx-0">
+                  <NavLink to="/dashboard/creatorHome">
+                    <GoHomeFill></GoHomeFill>
+                    <h1 className="hidden md:flex">Creator Home</h1>
+                  </NavLink>
+                </li>
+                <li className="mx-auto md:mx-0">
+                  <NavLink to="/dashboard/addContest">
+                    <MdAddToPhotos></MdAddToPhotos>
+                    <h1 className="hidden md:flex">Add Contest</h1>
+                  </NavLink>
+                </li>
+
+                <li className="mx-auto md:mx-0">
+                  <NavLink to="/dashboard/createdContest">
+                    <IoCreateSharp></IoCreateSharp>
+                    <h1 className="hidden md:flex">My Contest</h1>
+                  </NavLink>
+                </li>
+                <li className="mx-auto md:mx-0">
+                  <NavLink to="/dashboard/contestSubmitted">
+                    <RiTaskFill></RiTaskFill>
+                    <h1 className="hidden md:flex">Contest Sumission</h1>
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="mx-auto md:mx-0">
+                  <NavLink to="/dashboard/userHome">
+                    <GoHomeFill></GoHomeFill>
+                    <h1 className="hidden md:flex">User Home</h1>
+                  </NavLink>
+                </li>
+                <li className="mx-auto md:mx-0">
+                  <NavLink to="/dashboard/myProfile">
+                    <CgProfile></CgProfile>
+                    <h1 className="hidden md:flex">My Profile</h1>
+                  </NavLink>
+                </li>
+                <li className="mx-auto md:mx-0">
+                  <NavLink to="/dashboard/participateContest">
+                    <AiOutlineFileDone></AiOutlineFileDone>
+                    <h1 className="hidden md:flex">Participated Contest</h1>
+                  </NavLink>
+                </li>
+                <li className="mx-auto md:mx-0">
+                  <NavLink to="/dashboard/winingContest">
+                    <FaTrophy></FaTrophy>
+                    <h1 className="hidden md:flex">Wining Contest</h1>
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            <li className="mx-auto md:mx-0">
               <NavLink to="/">
-                <AiOutlineRollback ></AiOutlineRollback>
+                <AiOutlineRollback></AiOutlineRollback>
                 <h1 className="hidden md:flex">Go Home</h1>
               </NavLink>
             </li>
-
-            <li className="mx-auto lg:mx-0">
-              <NavLink to="/dashboard/addContest">
-                <MdAddToPhotos ></MdAddToPhotos>
-                <h1 className="hidden md:flex">Add Contest</h1>
-              </NavLink>
-            </li>
-            
           </ul>
         </div>
 
@@ -72,7 +128,7 @@ const DashBoard = () => {
           <div className="w-full h-16 md:h-10 lg:h-16 bg-third shadow-md rounded "></div>
 
           {/* dashboard content */}
-          
+
           <Outlet></Outlet>
         </div>
       </div>

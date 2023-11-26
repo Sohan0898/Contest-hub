@@ -12,9 +12,12 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayJs";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import useAuth from "../../../../Hooks/useAuth";
 
 const AddContest = () => {
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+
   const {
     control,
     handleSubmit,
@@ -28,6 +31,7 @@ const AddContest = () => {
     console.log("update Date:", updateDate);
 
     const contestInfo = {
+      email: user?.email,
       name: data.contestName,
       image: data.contestPhoto,
       price: parseFloat(data.contestPrice),

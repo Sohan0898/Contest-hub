@@ -19,6 +19,7 @@ import WiningContest from "../../Pages/Dashboard/User/WiningContest/WiningContes
 import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
 import AdminRoute from "../AdminRoute/AdminRoute";
 import CreatorRoute from "../CreatorRoute/CreatorRoute";
+import UpdateContest from "../../Pages/Dashboard/UpdateContest/UpdateContest";
 
 
 
@@ -62,6 +63,11 @@ const Router = createBrowserRouter([
       {
         path: "manageContest",
         element: <AdminRoute><ManageContest></ManageContest></AdminRoute>,
+      },
+      {
+        path: "updateContest/:id",
+        element: <PrivateRoutes><UpdateContest></UpdateContest></PrivateRoutes>,
+        loader: ({params}) => fetch(`http://localhost:5000/contests/${params.id}`),
       },
 
       //creator routes

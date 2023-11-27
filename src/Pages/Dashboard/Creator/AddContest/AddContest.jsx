@@ -10,11 +10,11 @@ import {
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayJs";
-import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import useAuth from "../../../../Hooks/useAuth";
 import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
 import useImgbbApi from "../../../../Hooks/useImgbbApi";
+import toast from "react-hot-toast";
 
 const AddContest = () => {
   const imgbbApi = useImgbbApi();
@@ -65,16 +65,12 @@ const AddContest = () => {
       console.log(addedContest.data);
       if (addedContest.data.insertedId) {
         reset();
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: `${contestInfo.name
+        toast.success(
+          `${contestInfo.name
             .split(/\s+/)
             .slice(0, 1)
-            .join(" ")}... is added to the Contest.`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
+            .join(" ")}... is added successfull.`
+        );
       }
     }
   };

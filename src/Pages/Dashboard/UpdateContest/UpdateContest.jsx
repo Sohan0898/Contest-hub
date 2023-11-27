@@ -11,11 +11,85 @@ import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayJs";
 
-const AddContest = () => {
-  const { control, handleSubmit } = useForm();
+import "dayjs/locale/en";
 
-  const onSubmit = (data) => {
+import { useLoaderData } from "react-router-dom";
+import useImgbbApi from "../../../Hooks/useImgbbApi";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import dayjs from "dayjs";
+import toast from "react-hot-toast";
+
+const UpdateContest = () => {
+  const { name, prize, tag, description, date, image, task, price, _id } =
+    useLoaderData();
+
+  const imgbbApi = useImgbbApi();
+  const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
+
+  dayjs.locale("en");
+  const dateObject = dayjs(date);
+
+  const { register, control, handleSubmit, reset } = useForm();
+
+  const onSubmit = async (data) => {
     console.log(data);
+    const updateDate = new Date(data.contestDate).toDateString();
+    console.log("update Date:", updateDate);
+
+    let imageUrl = image; // Defaultvalue set
+
+    // Check if an image file is selected
+    if (data.image && data.image[0]) {
+      const imageFile = { image: data.image[0] };
+
+      // Upload the image and get the URL
+      const res = await axiosPublic.post(imgbbApi, imageFile, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      });
+
+      console.log("with image url", res.data);
+
+      if (res.data.success) {
+        imageUrl = res.data.data.display_url;
+      } else {
+        toast.error("Image upload failed");
+        console.error("Image upload failed");
+      }
+    }
+
+    const contestInfo = {
+      name: data.contestName,
+      image: imageUrl,
+      price: parseFloat(data.contestPrice),
+      prize: parseFloat(data.prizeMoney),
+      tag: data.contestTag,
+      date: updateDate,
+      description: data.ContestDescription,
+      task: data.TaskSubmission,
+    };
+
+    console.log(contestInfo);
+
+    const addedContest = await axiosSecure.patch(
+      `/contests/${_id}`,
+      contestInfo
+    );
+    console.log(addedContest.data);
+
+    if (addedContest.data.modifiedCount > 0) {
+      reset();
+
+      toast.success(
+        `${contestInfo.name
+          .split(/\s+/)
+          .slice(0, 1)
+          .join(" ")}... is now updated.`
+      );
+    }
   };
 
   return (
@@ -30,7 +104,7 @@ const AddContest = () => {
             <Controller
               name="contestName"
               control={control}
-              defaultValue=""
+              defaultValue={name}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -41,18 +115,10 @@ const AddContest = () => {
               )}
             />
 
-            <Controller
-              name="contestPhoto"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  fullWidth
-                  variant="filled"
-                  label="Contest Photo"
-                />
-              )}
+            <input
+              {...register("image")}
+              type="file"
+              className="file-input bg-gray-300   w-full max-w-xl h-[57px] rounded-md rounded-b-none border-x-0 border-t-0  border-b-1  border-third "
             />
           </div>
 
@@ -60,7 +126,7 @@ const AddContest = () => {
             <Controller
               name="contestPrice"
               control={control}
-              defaultValue=""
+              defaultValue={price}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -74,14 +140,14 @@ const AddContest = () => {
             <Controller
               name="prizeMoney"
               control={control}
-              defaultValue=""
+              defaultValue={prize}
               render={({ field }) => (
                 <TextField
                   {...field}
                   fullWidth
                   variant="filled"
                   label="$ Prize Money"
-                  type="number" 
+                  type="number"
                 />
               )}
             />
@@ -93,7 +159,7 @@ const AddContest = () => {
               <Controller
                 name="contestTag"
                 control={control}
-                defaultValue=""
+                defaultValue={tag}
                 render={({ field }) => (
                   <Select {...field} label="Contest Tag">
                     <MenuItem value="Business Contest">
@@ -108,28 +174,45 @@ const AddContest = () => {
                 )}
               />
             </FormControl>
+
             <Controller
               name="contestDate"
               control={control}
+              defaultValue={dateObject}
               render={({ field }) => (
                 <FormControl fullWidth>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                       {...field}
                       label="Select Contest Date"
-                      renderInput={(props) => <TextField {...props} />}
+                      slotProps={{ textField: { variant: "filled" } }}
                     />
                   </LocalizationProvider>
                 </FormControl>
               )}
             />
+
+            {/* <Controller
+              name="contestDate"
+              control={control}
+              defaultValue={date}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  variant="filled"
+                  label="Contest Date"
+                  
+                />
+              )}
+            /> */}
           </div>
 
           <div className="mt-8">
             <Controller
               name="ContestDescription"
               control={control}
-              defaultValue=""
+              defaultValue={description}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -146,7 +229,7 @@ const AddContest = () => {
             <Controller
               name="TaskSubmission"
               control={control}
-              defaultValue=""
+              defaultValue={task}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -177,4 +260,4 @@ const AddContest = () => {
   );
 };
 
-export default AddContest;
+export default UpdateContest;

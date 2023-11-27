@@ -16,6 +16,9 @@ import ManageContest from "../../Pages/Dashboard/Admin/ManageContest/ManageConte
 import MyProfile from "../../Pages/Dashboard/User/MyProfile/MyProfile";
 import ParticipateContest from "../../Pages/Dashboard/User/ParticipateContest/ParticipateContest";
 import WiningContest from "../../Pages/Dashboard/User/WiningContest/WiningContest";
+import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
+import AdminRoute from "../AdminRoute/AdminRoute";
+import CreatorRoute from "../CreatorRoute/CreatorRoute";
 
 
 
@@ -44,45 +47,40 @@ const Router = createBrowserRouter([
 
   {
     path: "dashboard",
-    element: <DashBoard></DashBoard>,
+    element: <PrivateRoutes><DashBoard></DashBoard></PrivateRoutes>,
     children: [
+
       // admin routes
       {
-        path: "allUser",
-        element: <AllUser></AllUser>,
-      },
-      
-      {
         path: "adminHome",
-        element: <AdminHome></AdminHome>,
+        element: <AdminRoute><AdminHome></AdminHome></AdminRoute>,
+      },
+      {
+        path: "allUser",
+        element: <AdminRoute><AllUser></AllUser></AdminRoute>,
       },
       {
         path: "manageContest",
-        element: <ManageContest></ManageContest>,
+        element: <AdminRoute><ManageContest></ManageContest></AdminRoute>,
       },
-
-
 
       //creator routes
       {
         path: "creatorHome",
-        element: <CreatorHome></CreatorHome>,
+        element: <CreatorRoute><CreatorHome></CreatorHome></CreatorRoute>,
       },
-
-
       {
         path: "addContest",
-        element: <AddContest></AddContest>,
+        element: <CreatorRoute><AddContest></AddContest></CreatorRoute>,
       },
       {
         path: "createdContest",
-        element: <CreatedContest></CreatedContest>,
+        element: <CreatorRoute><CreatedContest></CreatedContest></CreatorRoute>,
       },
       {
         path: "contestSubmitted",
-        element: <ContestSubmitted></ContestSubmitted>,
+        element: <CreatorRoute><ContestSubmitted></ContestSubmitted></CreatorRoute>,
       },
-
 
       // user routes
       {

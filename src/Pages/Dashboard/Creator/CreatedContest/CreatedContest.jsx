@@ -17,7 +17,9 @@ const CreatedContest = () => {
   return (
     <div>
       <div className="my-4 mt-10">
-        <h2 className="text-3xl font-bold ">Your Total Added Contest: {items?.length}</h2>
+        <h2 className="text-3xl font-bold ">
+          Your Total Added Contest: {items?.length}
+        </h2>
       </div>
       <div className="overflow-x-auto bg-gray-200 p-6 mt-8  shadow-md">
         <table className="table table-zebra  w-full">
@@ -41,20 +43,16 @@ const CreatedContest = () => {
                 <th>{index + 1}</th>
                 <td>
                   {" "}
-                  
-                    <div className="avatar">
-                      <div className="rounded w-16 h-16">
-                        <img
-                          src={items.image}
-                          alt={items.name}
-                        />
-                      </div>
+                  <div className="avatar">
+                    <div className="rounded w-16 h-16">
+                      <img src={items.image} alt={items.name} />
+                    </div>
                   </div>
                 </td>
                 <td>{items.name}</td>
                 <td>{items.tag}</td>
                 <td>{items.price}</td>
-                <td>Pending</td>
+                <td>{items.status}</td>
                 <td>
                   <button className="btn btn-square btn-ghost  ">
                     <FaEdit

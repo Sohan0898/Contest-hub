@@ -13,12 +13,18 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayJs";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import useAuth from "../../../../Hooks/useAuth";
+import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
+import useImgbbApi from "../../../../Hooks/useImgbbApi";
 
 const AddContest = () => {
+  const imgbbApi = useImgbbApi();
+
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const axiosPublic = useAxiosPublic();
 
   const {
+    register,
     control,
     handleSubmit,
     reset,
@@ -30,34 +36,46 @@ const AddContest = () => {
     const updateDate = new Date(data.contestDate).toDateString();
     console.log("update Date:", updateDate);
 
-    const contestInfo = {
-      email: user?.email,
-      name: data.contestName,
-      image: data.contestPhoto,
-      price: parseFloat(data.contestPrice),
-      prize: parseFloat(data.prizeMoney),
-      tag: data.contestTag,
-      date: updateDate,
-      description: data.ContestDescription,
-      task: data.TaskSubmission,
-    };
+    const imageFile = { image: data.image[0] };
+    const res = await axiosPublic.post(imgbbApi, imageFile, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
 
-    console.log(contestInfo);
+    console.log("with image url", res.data);
 
-    const addedContest = await axiosSecure.post("/contests", contestInfo);
-    console.log(addedContest.data);
-    if (addedContest.data.insertedId) {
-      reset();
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: `${contestInfo.name
-          .split(/\s+/)
-          .slice(0, 1)
-          .join(" ")}... is added to the Contest.`,
-        showConfirmButton: false,
-        timer: 1500,
-      });
+    if (res.data.success) {
+      const contestInfo = {
+        email: user?.email,
+        name: data.contestName,
+        image: res.data.data.display_url,
+        price: parseFloat(data.contestPrice),
+        prize: parseFloat(data.prizeMoney),
+        tag: data.contestTag,
+        date: updateDate,
+        description: data.ContestDescription,
+        task: data.TaskSubmission,
+        status: "Pending",
+      };
+
+      console.log(contestInfo);
+
+      const addedContest = await axiosSecure.post("/contests", contestInfo);
+      console.log(addedContest.data);
+      if (addedContest.data.insertedId) {
+        reset();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `${contestInfo.name
+            .split(/\s+/)
+            .slice(0, 1)
+            .join(" ")}... is added to the Contest.`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
     }
   };
 
@@ -85,19 +103,10 @@ const AddContest = () => {
               )}
             />
 
-            <Controller
-              name="contestPhoto"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  fullWidth
-                  variant="filled"
-                  label="Contest Photo"
-                  required
-                />
-              )}
+            <input
+              {...register("image", { required: true })}
+              type="file"
+              className="file-input bg-gray-300   w-full max-w-xl h-[57px] rounded-md rounded-b-none border-x-0 border-t-0  border-b-1  border-third "
             />
           </div>
 

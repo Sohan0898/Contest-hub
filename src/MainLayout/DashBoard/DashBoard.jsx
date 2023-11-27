@@ -10,11 +10,14 @@ import { MdManageHistory } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineFileDone } from "react-icons/ai";
 import { FaTrophy } from "react-icons/fa";
+import useAdmin from "../../Hooks/useAdmin";
+import useCreator from "../../Hooks/useCreator";
 
 const DashBoard = () => {
-  const isAdmin = true;
 
-  const isCreator = false;
+  const [isAdmin] = useAdmin();
+
+  const [isCreator] = useCreator();
 
   return (
     <div>
@@ -128,6 +131,8 @@ const DashBoard = () => {
           <div className="w-full h-16 md:h-10 lg:h-16 bg-third shadow-md rounded "></div>
 
           {/* dashboard content */}
+
+          
 
           <Outlet></Outlet>
         </div>

@@ -3,17 +3,28 @@ import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 
 import { MdOutlineTaskAlt } from "react-icons/md";
+import toast from "react-hot-toast";
 
 const ManageContest = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: items = [] } = useQuery({
+  const { data: items = [], refetch } = useQuery({
     queryKey: ["contests"],
     queryFn: async () => {
       const res = await axiosSecure.get("/contests");
       return res.data;
     },
   });
+
+  const handleMakeApproved = (items) => {
+    axiosSecure.patch(`/contests/approved/${items._id}`).then((res) => {
+      console.log(res.data);
+      if (res.data.modifiedCount > 0) {
+        refetch();
+        toast.success("Contest is approved now");
+      }
+    });
+  };
 
   return (
     <div>
@@ -32,6 +43,7 @@ const ManageContest = () => {
               <th>Task</th>
               <th>Contest Price</th>
               <th>Prize Money</th>
+              <th>Deadline</th>
               <th>Edit</th>
               <th>Delete</th>
               <th>Approve Status</th>
@@ -51,6 +63,7 @@ const ManageContest = () => {
                 </td>
                 <td>{items.name}</td>
                 <td>{items.tag}</td>
+
                 <td>
                   {items.task.length > 25
                     ? `${items.task.substring(0, 25)}...`
@@ -58,6 +71,7 @@ const ManageContest = () => {
                 </td>
                 <td>{items.price}</td>
                 <td>{items.prize}</td>
+                <td className="text-red-600">{items.date}</td>
                 <td>
                   <button className="btn btn-square btn-ghost  ">
                     <FaEdit
@@ -71,10 +85,17 @@ const ManageContest = () => {
                     <FaTrashAlt className="text-lg text-red-600"></FaTrashAlt>
                   </button>
                 </td>
-                <td>
-                  <button className="btn btn-square btn-ghost ">
-                    <MdOutlineTaskAlt className="text-xl text-green-600"></MdOutlineTaskAlt>
-                  </button>
+                <td className="text-green-500 font-bold">
+                  {items.status === "approved" ? (
+                    "Approved ✅"
+                  ) : (
+                    <button
+                      onClick={() => handleMakeApproved(items)}
+                      className="btn btn-square btn-ghost "
+                    >
+                      <MdOutlineTaskAlt className="text-xl text-green-600"></MdOutlineTaskAlt>
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

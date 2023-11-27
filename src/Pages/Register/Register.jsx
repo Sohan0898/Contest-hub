@@ -12,10 +12,12 @@ import { Helmet } from "react-helmet-async";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import SoicalLogin from "../../assets/Shared/SocialLogin/SoicalLogin";
 import toast from "react-hot-toast";
+import useImgbbApi from "../../Hooks/useImgbbApi";
 
 const Register = () => {
   const { signUpWithEmail } = useAuth();
   const axiosPublic = useAxiosPublic();
+  const imgbbApi = useImgbbApi();
 
   const [regError, setRegError] = useState("");
   const navigate = useNavigate();
@@ -61,26 +63,37 @@ const Register = () => {
       const result = await signUpWithEmail(data.email, data.password);
       console.log(result?.user);
 
+      const imageFile = { image: data?.image[0] };
+      const res = await axiosPublic.post(imgbbApi, imageFile, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      });
+      console.log("with image url", res.data);
+
       // Update user profile
       await updateProfile(result?.user, {
-        displayName: data.name,
-        photoURL: data.photo,
+        displayName: data?.name,
+        photoURL: res?.data?.data?.display_url,
       });
 
       // create user entry in the database
       const userInfo = {
         name: data.name,
         email: data.email,
-        image: data.photo,
-        role: 'user',
+        image: res?.data?.data?.display_url,
+        role: "user",
       };
       axiosPublic.post("/users", userInfo).then((res) => {
         if (res.data.insertedId) {
           console.log("user added to the DB");
           reset();
-          toast.success(`${data.name.split(/\s+/)
-          .slice(0, 1)
-          .join(" ")} has successfully registered`);
+          toast.success(
+            `${data.name
+              .split(/\s+/)
+              .slice(0, 1)
+              .join(" ")} has successfully registered`
+          );
           navigate("/");
         }
       });
@@ -88,7 +101,6 @@ const Register = () => {
       console.error(error);
       toast.error(error.message);
       setRegError(error.message);
-      
     }
   };
 
@@ -163,12 +175,17 @@ const Register = () => {
                       Photo URL
                     </label>
                     <div className="mt-2.5">
-                      <input
+                      {/* <input
                         type="text"
                         name="photo"
                         placeholder="Enter your photoURL"
                         className={`block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border  rounded-md focus:outline-none focus:border-blue-600 caret-blue-600`}
                         {...register("photo")}
+                      /> */}
+                      <input
+                        {...register("image", { required: true })}
+                        type="file"
+                        className="file-input file-input-error w-full block h-[57px] text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600 "
                       />
                     </div>
                   </div>
@@ -248,9 +265,8 @@ const Register = () => {
                       type="submit"
                       className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-secondary border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700"
                     >
-                        <SensorOccupiedIcon />
+                      <SensorOccupiedIcon />
                       <span className="ml-2">Sign Up</span>{" "}
-                      
                     </button>
                   </div>
                 </div>

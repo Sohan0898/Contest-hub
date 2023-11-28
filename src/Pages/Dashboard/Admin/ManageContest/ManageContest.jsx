@@ -28,37 +28,27 @@ const ManageContest = () => {
     });
   };
 
-
   const handleDeleteContest = (items) => {
     Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
-        if (result.isConfirmed) {
-            const res = await axiosSecure.delete(`/Contests/${items._id}`);
-            // console.log(res.data);
-            if (res.data.deletedCount > 0) {
-                // refetch to update the ui
-                refetch();
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: `${items.name} has been deleted`,
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            }
-
-
+      if (result.isConfirmed) {
+        const res = await axiosSecure.delete(`/Contests/${items._id}`);
+        // console.log(res.data);
+        if (res.data.deletedCount > 0) {
+          // refetch to update the ui
+          refetch();
+          toast.success(`${items.name} has been deleted`);
         }
+      }
     });
-
-  }
+  };
   return (
     <div>
       <div className="my-4 mt-10">
@@ -106,17 +96,20 @@ const ManageContest = () => {
                 <td>{items.prize}</td>
                 <td className="font-semibold text-red-600">{items.date}</td>
                 <td>
-                  <Link to={`/dashboard/updateContest/${items._id}`}><button className="btn btn-square btn-ghost  ">
-                    <FaEdit
-                      className="text-third 
+                  <Link to={`/dashboard/updateContest/${items._id}`}>
+                    <button className="btn btn-square btn-ghost  ">
+                      <FaEdit
+                        className="text-third 
                                     text-xl"
-                    ></FaEdit>
-                  </button></Link>
+                      ></FaEdit>
+                    </button>
+                  </Link>
                 </td>
                 <td>
-                  <button 
-                  onClick={() => handleDeleteContest(items)}
-                   className="btn btn-square btn-ghost ">
+                  <button
+                    onClick={() => handleDeleteContest(items)}
+                    className="btn btn-square btn-ghost "
+                  >
                     <FaTrashAlt className="text-lg text-red-600"></FaTrashAlt>
                   </button>
                 </td>
@@ -126,9 +119,10 @@ const ManageContest = () => {
                   ) : (
                     <button
                       onClick={() => handleMakeApproved(items)}
-                      className="btn bg-transparent  btn-ghost tooltip tooltip-warning " data-tip="Approve Contest"
+                      className="btn bg-transparent  btn-ghost tooltip tooltip-warning "
+                      data-tip="Approve Contest"
                     >
-                      <MdOutlineTaskAlt className="text-2xl text-amber-400"></MdOutlineTaskAlt> 
+                      <MdOutlineTaskAlt className="text-2xl text-amber-400"></MdOutlineTaskAlt>
                     </button>
                   )}
                 </td>

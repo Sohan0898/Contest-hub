@@ -7,7 +7,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import UpdateIcon from '@mui/icons-material/Update';
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayJs";
 
@@ -95,7 +95,7 @@ const UpdateContest = () => {
   return (
     <div className="mt-8">
       <h1 className="text-4xl text-center font-bold text-third">
-        Please Add Your Contest
+        Please Update <span className="text-red-600">{name} .</span>
       </h1>
 
       <div className="text-center w-full mx-auto mt-10 px-4   md:px-12 lg:px-20 bg-gray-200 py-10 rounded-md shadow-lg">
@@ -245,13 +245,13 @@ const UpdateContest = () => {
 
           <div className="mt-8">
             <Button
-              sx={{ background: "#1786F9", fontWeight: 600 }}
+              sx={{ background: "darkred", fontWeight: 600 }}
               variant="contained"
               type="submit"
               fullWidth
-              endIcon={<LibraryAddIcon />}
+              endIcon={<UpdateIcon />}
             >
-              Add Contest
+              Update Contest
             </Button>
           </div>
         </form>

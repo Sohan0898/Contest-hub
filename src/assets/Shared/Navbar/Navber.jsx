@@ -19,10 +19,14 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import useAuth from "../../../Hooks/useAuth";
 import toast from "react-hot-toast";
+import useAdmin from "../../../Hooks/useAdmin";
+import useCreator from "../../../Hooks/useCreator";
 
 function Navber() {
   const { user, logOut } = useAuth();
   const navigate = useNavigate(); 
+  // const isAdmin = useAdmin();
+  // const isCreator =useCreator();
 
 
   const handleLogOut = () => {
@@ -52,9 +56,22 @@ function Navber() {
     setAnchorElUser(null);
   };
 
-  const handleDashboard = ()=> {
- navigate("dashboard")
-  }
+  const handleDashboard = () => {
+
+    const { role } = user;
+    
+    // Navigate based on the user's role
+    switch (role) {
+      case 'admin':
+        navigate('/dashboard/adminHome');
+        break;
+      case 'creator':
+        navigate('/dashboard/creatorHome');
+        break;
+      default:
+        navigate('/dashboard/userHome');
+    }
+  };
 
 
   //scrollToShadow
@@ -76,6 +93,10 @@ function Navber() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [hasShadow]);
+
+
+
+
 
 
   const navMenu = (

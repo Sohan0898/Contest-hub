@@ -19,8 +19,8 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import useAuth from "../../../Hooks/useAuth";
 import toast from "react-hot-toast";
-import useAdmin from "../../../Hooks/useAdmin";
-import useCreator from "../../../Hooks/useCreator";
+// import useAdmin from "../../../Hooks/useAdmin";
+// import useCreator from "../../../Hooks/useCreator";
 
 function Navber() {
   const { user, logOut } = useAuth();
@@ -32,9 +32,17 @@ function Navber() {
   const handleLogOut = () => {
     logOut()
     toast.success(`${user?.displayName.split(/\s+/)
+    
     .slice(0, 1)
     .join(" ")} has successfully sign-out`)
-      .then(() => console.log("Sign-out successful"))
+    navigate('/')
+      .then(() => 
+      console.log("Sign-out successful")
+     
+      
+      )
+      
+
       .catch((error) => console.log(error));
   };
 
@@ -101,8 +109,8 @@ function Navber() {
 
   const navMenu = (
     <>
-      {user && (
-        <>
+      
+        
           <li>
             <NavLink
               to="/"
@@ -119,7 +127,7 @@ function Navber() {
           </li>
           <li>
             <NavLink
-              to="/allFood"
+              to="/allContest"
               className={({ isActive, isPending }) =>
                 isPending
                   ? "pending"
@@ -145,8 +153,8 @@ function Navber() {
               Blog
             </NavLink>
           </li>
-        </>
-      )}
+        
+    
     </>
   );
 

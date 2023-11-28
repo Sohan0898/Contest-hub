@@ -20,6 +20,7 @@ import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
 import AdminRoute from "../AdminRoute/AdminRoute";
 import CreatorRoute from "../CreatorRoute/CreatorRoute";
 import UpdateContest from "../../Pages/Dashboard/UpdateContest/UpdateContest";
+import AllContest from "../../Pages/AllContest/AllContest";
 
 
 
@@ -32,6 +33,10 @@ const Router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+      },
+      {
+        path: "/allContest",
+        element: <AllContest></AllContest>,
       },
       {
         path: "register",

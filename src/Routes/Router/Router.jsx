@@ -21,6 +21,8 @@ import AdminRoute from "../AdminRoute/AdminRoute";
 import CreatorRoute from "../CreatorRoute/CreatorRoute";
 import UpdateContest from "../../Pages/Dashboard/UpdateContest/UpdateContest";
 import AllContest from "../../Pages/AllContest/AllContest";
+import ContestDetails from "../../Pages/ContestDetails/ContestDetails";
+import PaymentToRegister from "../../Pages/PaymentToRegister/PaymentToRegister";
 
 
 
@@ -37,6 +39,16 @@ const Router = createBrowserRouter([
       {
         path: "/allContest",
         element: <AllContest></AllContest>,
+      },
+      {
+        path: "/contestDetails/:id",
+        element: <ContestDetails></ContestDetails>,
+        loader: ({params}) => fetch(`http://localhost:5000/contests/${params.id}`),
+      },
+      {
+        path: "paymentToRegister/:id",
+        element: <PaymentToRegister></PaymentToRegister>,
+        loader: ({params}) => fetch(`http://localhost:5000/contests/${params.id}`),
       },
       {
         path: "register",

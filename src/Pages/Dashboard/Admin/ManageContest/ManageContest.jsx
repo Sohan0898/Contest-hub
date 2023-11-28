@@ -63,6 +63,7 @@ const ManageContest = () => {
               <th>Contest Photo</th>
               <th>Contest Name</th>
               <th>Contest Tag</th>
+              <th>Creator Email</th>
               <th>Task</th>
               <th>Contest Price</th>
               <th>Prize Money</th>
@@ -86,6 +87,7 @@ const ManageContest = () => {
                 </td>
                 <td>{items.name}</td>
                 <td>{items.tag}</td>
+                <td>{items.email}</td>
 
                 <td>
                   {items.task.length > 25

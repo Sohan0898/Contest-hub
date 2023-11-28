@@ -1,30 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { useState } from "react";
 import ContestTab from "./ContestTab";
 import { Link } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
+import useContest from "../../Hooks/useContest";
 
 const AllContest = () => {
-  const axiosPublic = useAxiosPublic();
+
   const [tabIndex, setTabIndex] = useState(0);
   const { user } = useAuth();
 
-  const { data: approvedContests = [] } = useQuery({
-    queryKey: ["contests", "approved"],
-    queryFn: async () => {
-      const res = await axiosPublic.get("/contests");
-      const allContests = res.data;
-      const approvedData = allContests.filter(
-        (contest) => contest.status === "approved"
-      );
-
-      console.log(approvedData);
-      return approvedData;
-    },
-  });
+  const [approvedContests] = useContest();
 
   const Business = approvedContests.filter(
     (item) => item.tag === "Business Contest"

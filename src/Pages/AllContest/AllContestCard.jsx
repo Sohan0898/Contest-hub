@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 import "./cardStyle.css";
 import { HiMiniArrowLeftOnRectangle } from "react-icons/hi2";
 
 const AllContestCard = ({ contest }) => {
-  const { name, image, tag, task } = contest;
+  const { _id, name, image, tag, task } = contest;
 
   return (
     <div>
@@ -35,9 +36,9 @@ const AllContestCard = ({ contest }) => {
                 <p className="text-xs text-gray-400 mt-1 ">
                   Contest Task : {task}
                 </p>
-                <button className="absolute bg-gray-300 px-3 text-black font-hind text-sm font-semibold rounded hover:bg-gray-400 py-2 bottom-4 transition duration-300 ease-in-out">
+                <Link to={`/contestDetails/${_id}`}><button className="absolute bg-gray-300 px-3 text-black font-hind text-sm font-semibold rounded hover:bg-gray-400 py-2 bottom-4 transition duration-300 ease-in-out">
                   See more
-                </button>
+                </button></Link>
               </div>
             </div>
           </div>

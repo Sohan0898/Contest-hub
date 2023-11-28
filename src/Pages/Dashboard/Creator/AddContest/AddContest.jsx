@@ -48,6 +48,8 @@ const AddContest = () => {
     if (res.data.success) {
       const contestInfo = {
         email: user?.email,
+        creatorName: user?.displayName,
+        creatorImage: user?.photoURL,
         name: data.contestName,
         image: res.data.data.display_url,
         price: parseFloat(data.contestPrice),

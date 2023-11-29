@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 const Banner = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     const fetchContestSuggestions = async () => {
@@ -14,28 +16,42 @@ const Banner = () => {
           `http://localhost:5000/contests/search?query=${searchQuery}`
         );
         const data = await response.json();
+        console.log(data);
         setSuggestions(data);
       } catch (error) {
         console.error(error);
       }
     };
-    // Fetch suggestions only if there is a searchQuery
+
     if (searchQuery) {
       fetchContestSuggestions();
+      setIsDropdownOpen(true);
     } else {
       setSuggestions([]);
+      setIsDropdownOpen(false);
     }
   }, [searchQuery]);
 
-  const handleSearch = () => {
-    // Handle the search action and navigate to the contest details page
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
 
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  const handleSearch = () => {
     console.log(`Search for contests with tags: ${searchQuery}`);
+    navigate("/allContest");
   };
 
   const handleSuggestionClick = (contest) => {
-    // console.log(`navigate to ${contest.name}`);
-
     navigate(`/contestDetails/${contest._id}`);
   };
 
@@ -55,7 +71,7 @@ const Banner = () => {
               <input
                 type="text"
                 placeholder="Search Your Contest...."
-                className="input py-8 input-bordered border-secondary hover:ring-1 text-black  hover:ring-secondary outline-1 outline-white  w-full lg:w-[800px]"
+                className="input py-8 input-bordered border-secondary hover:ring-1 text-black hover:ring-secondary outline-1 outline-white w-full lg:w-[800px]"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -66,16 +82,26 @@ const Banner = () => {
               </button>
 
               {/* Display suggestions in a dropdown */}
-              <div className="z-[1]  ">
-                {suggestions.length > 0 && (
-                  <ul className=" absolute left-0  right-0 mt-10 bg-white border rounded shadow-md">
+              <div className="z-[1]">
+                {isDropdownOpen && suggestions.length > 0 && (
+                  <ul
+                    ref={dropdownRef}
+                    className="absolute text-start left-0 right-0 mt-9 bg-white border rounded-md shadow-md"
+                  >
                     {suggestions.map((contest) => (
                       <li
                         key={contest._id}
                         className="p-2 text-black cursor-pointer hover:bg-gray-100"
                         onClick={() => handleSuggestionClick(contest)}
                       >
-                        {contest.name}
+                        <span>
+                          <img
+                            className="avatar w-16 h-16 mr-2 rounded"
+                            src={contest.image}
+                            alt=""
+                          />
+                        </span>
+                        <span>{contest.name}</span>
                       </li>
                     ))}
                   </ul>
@@ -83,7 +109,7 @@ const Banner = () => {
               </div>
             </div>
             <h1 className="mb-5 mt-10 leading-tight text-white text-5xl font-semibold">
-              Unleash Your Talents in the <br />{" "}
+              Unleash Your Talents in the <br />
               <span className="text-primary font-bold">Contest Arena</span>
             </h1>
             <p className="mb-5 text-sm text-slate-500">

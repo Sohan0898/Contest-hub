@@ -2,6 +2,7 @@ import { Navigate, useLocation } from "react-router-dom";
 
 import useAuth from "../../Hooks/useAuth";
 import useAdmin from "../../Hooks/useAdmin";
+import { PulseLoader } from "react-spinners";
 
 
 const AdminRoute = ({ children }) => {
@@ -10,7 +11,11 @@ const AdminRoute = ({ children }) => {
     const location = useLocation();
 
     if (loading || isAdminLoading) {
-        return <progress className="progress w-56"></progress>
+        return (
+            <div className="flex items-center justify-center h-screen">
+              <PulseLoader color="#1786F9" loading={loading} size={30} />
+            </div>
+          );
     }
 
     if (user && isAdmin) {

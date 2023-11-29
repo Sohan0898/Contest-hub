@@ -3,7 +3,7 @@ import { useState } from "react";
 
 
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import InfoIcon from "@mui/icons-material/Info";
@@ -17,6 +17,7 @@ import toast from "react-hot-toast";
 const Login = () => {
   const { signInWithEmail } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
 
   const handleTogglePassword = () => {
@@ -43,7 +44,7 @@ const Login = () => {
       toast.success(`${result?.user?.displayName.split(/\s+/)
       .slice(0, 1)
       .join(" ")} has successfully signed`);
-      navigate("/");
+      navigate(location?.state ? location?.state : "/");
     } catch (error) {
       console.error(error);
       toast.error(error.message);

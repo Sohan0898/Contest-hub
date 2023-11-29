@@ -44,7 +44,7 @@ const CreatedContest = () => {
         const res = await axiosSecure.delete(`/Contests/${items._id}`);
         // console.log(res.data);
         if (res.data.deletedCount > 0) {
-          // refetch to update the ui
+          
           refetch();
           toast.success(`${items.name} has been deleted`);
         }
@@ -129,9 +129,9 @@ const CreatedContest = () => {
                   </button>
                 </td>
                 <td>
-                  <button className="btn btn-square btn-ghost ">
+                  <Link to={'/dashboard/contestSubmitted'}><button className="btn btn-square btn-ghost ">
                     <BiTask className="text-xl text-secondary"></BiTask>
-                  </button>
+                  </button></Link>
                 </td>
               </tr>
             ))}

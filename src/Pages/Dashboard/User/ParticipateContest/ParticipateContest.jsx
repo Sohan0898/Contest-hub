@@ -1,12 +1,9 @@
-import { BiTask } from "react-icons/bi";
+import { useState } from "react";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import useAuth from "../../../../Hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 
-
-
 const ParticipateContest = () => {
-
   const axiosSecure = useAxiosSecure();
   const { user, loading } = useAuth();
 
@@ -19,6 +16,17 @@ const ParticipateContest = () => {
     },
   });
 
+  const [view, setView] = useState("all");
+
+  const filteredItems =
+    view === "upcoming"
+      ? items.filter((contest) => contest.paid === "yes")
+      : items;
+
+  const sortedItems = [...filteredItems].sort((a, b) =>
+    view === "upcoming" ? new Date(a.deadline) - new Date(b.deadline) : 0
+  );
+
   if (loading) {
     return (
       <div className="flex justify-center items-center w-2/5 mx-auto h-[100vh]">
@@ -27,60 +35,78 @@ const ParticipateContest = () => {
     );
   }
 
+  return (
+    <div>
+      <div>
+        <div className="my-4 mt-10 flex justify-between items-center ">
+          <h2 className="text-3xl font-bold">
+            {view === "upcoming" ? "My Upcoming Contests" : "My All Contests"} :{" "}
+            {filteredItems.length}
+          </h2>
+          <div className="flex space-x-4 mt-4">
+            <button
+              className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
+                view === "upcoming" ? "bg-blue-700" : ""
+              }`}
+              onClick={() => setView("upcoming")}
+            >
+              My Upcoming Contests
+            </button>
+            <button
+              className={`bg-blue-500 hover.bg-blue-700 text-white font-bold py-2 px-4 rounded ${
+                view === "all" ? "bg-blue-700" : ""
+              }`}
+              onClick={() => setView("all")}
+            >
+              My All Contests
+            </button>
+          </div>
+        </div>
+        <div className="overflow-x-auto bg-gray-200 p-6 mt-8 shadow-md">
+          <table className="table table-zebra w-full">
+            {/* head */}
+            <thead className="bg-third text-white text-md">
+              <tr>
+                <th>#</th>
+                <th>Contest Photo</th>
+                <th>Contest Name</th>
+                <th>Creator Name</th>
 
-    return (
-        <div>
-            <div>
-      <div className="my-4 mt-10">
-        <h2 className="text-3xl font-bold ">
-          Submitted Contest By Participate: {items.length}
-        </h2>
-      </div>
-      <div className="overflow-x-auto bg-gray-200 p-6 mt-8  shadow-md">
-        <table className="table table-zebra  w-full">
-          {/* head */}
-          <thead className="bg-third text-white text-md">
-            <tr>
-              <th>#</th>
-              <th>Contest Photo</th>
-              <th>Contest Name</th>
-              <th>Participate Name</th>
-              <th>Participate Email</th>
-              <th>Status</th>
-              <th>Task Submitted</th>
-              <th>Make Winner</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items?.map((items, index) => (
-              <tr key={items._id}>
-                <th>{index + 1}</th>
-                <td>
-                  {" "}
-                  <div className="avatar">
-                    <div className="rounded w-16 h-16">
-                      <img src={items.contestImage} alt={items.contestName} />
-                    </div>
-                  </div>
-                </td>
-                <td>{items.contestName}</td>
-                <td>{items.participateName}</td>
-                <td>{items.participateEmail}</td>
-                <td>{items.role}</td>
-                <td>{items.attempt}</td>
-                <td>
-                  <button className="btn btn-square btn-ghost ">
-                    <BiTask className="text-xl text-secondary"></BiTask>
-                  </button>
-                </td>
+                <th>Paid Status</th>
+                <th>Attempt Status</th>
+                <th>Contest Deadline</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {sortedItems.map((contest, index) => (
+                <tr key={contest._id}>
+                  <th>{index + 1}</th>
+                  <td>
+                    <div className="avatar">
+                      <div className="rounded w-16 h-16">
+                        <img
+                          src={contest.contestImage}
+                          alt={contest.contestName}
+                        />
+                      </div>
+                    </div>
+                  </td>
+                  <td>{contest.contestName}</td>
+                  <td>{contest.creatorName}</td>
+
+                  <td>{contest.paid}</td>
+                  <td>{contest.role}</td>
+                  <td className="text-red-600 font-semibold">
+                    {contest.deadline}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-        </div>
-    );
+  );
 };
 
 export default ParticipateContest;

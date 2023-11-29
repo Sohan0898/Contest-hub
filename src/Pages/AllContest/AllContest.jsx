@@ -7,7 +7,6 @@ import useAuth from "../../Hooks/useAuth";
 import useContest from "../../Hooks/useContest";
 
 const AllContest = () => {
-
   const [tabIndex, setTabIndex] = useState(0);
   const { user } = useAuth();
 

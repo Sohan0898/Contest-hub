@@ -4,7 +4,7 @@ const BestCreatorCard = ({ creator }) => {
   const { name, image, role } = creator;
 
   return (
-    <div className="mx-auto h-full w-full   bg-gray-100  rounded-sm shadow-sm  ">
+    <div className="mx-auto h-full w-full   bg-gray-200  rounded-sm shadow-sm  ">
       <div className="flex justify-end px-4 pt-4"></div>
       <div className="flex flex-col items-center pb-10">
         <img

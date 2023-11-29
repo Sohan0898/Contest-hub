@@ -23,6 +23,7 @@ import UpdateContest from "../../Pages/Dashboard/UpdateContest/UpdateContest";
 import AllContest from "../../Pages/AllContest/AllContest";
 import ContestDetails from "../../Pages/ContestDetails/ContestDetails";
 import PaymentToRegister from "../../Pages/PaymentToRegister/PaymentToRegister";
+import Blog from "../../Pages/Blog/Blog";
 
 
 
@@ -57,6 +58,10 @@ const Router = createBrowserRouter([
       {
         path: "login",
         element: <Login></Login>,
+      },
+      {
+        path: "blog",
+        element: <Blog></Blog>,
       },
     ],
   },

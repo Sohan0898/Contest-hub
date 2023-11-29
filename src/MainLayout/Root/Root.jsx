@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Navber from "../../assets/Shared/Navbar/Navber";
+import Footer from "../../assets/Shared/Footer/Footer";
 
 const Root = () => {
   const location = useLocation();
@@ -8,10 +9,15 @@ const Root = () => {
     location.pathname.includes("login");
 
   return (
-    <div>
+    <div className="bg-gray-100" >
       {noNav || <Navber></Navber>}
-      <Outlet></Outlet>
+      <div className=' min-h-[calc(100vh-68px)]'>
+        <Outlet />
+      </div>
+      {noNav || <Footer></Footer>}
+      
     </div>
+    
   );
 };
 

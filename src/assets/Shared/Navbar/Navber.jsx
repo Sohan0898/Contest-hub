@@ -159,7 +159,7 @@ function Navber() {
   );
 
   return (
-    <AppBar sx={{ background: "#0d1a33", py: 1 , boxShadow: hasShadow ? '0px 4px 10px rgba(0, 0, 0, 0.1)' : 'none', zIndex: 10,}} position="sticky">
+    <AppBar  sx={{ background: "#0d1a33", py: 1 , boxShadow: hasShadow ? '0px 4px 10px rgba(0, 0, 0, 0.1)' : 'none', zIndex: 10,}} position="sticky">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Logo></Logo>

@@ -27,6 +27,7 @@ import Blog from "../../Pages/Blog/Blog";
 
 
 
+
 const Router = createBrowserRouter([
   {
     path: "/",
@@ -48,7 +49,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "paymentToRegister/:id",
-        element: <PaymentToRegister></PaymentToRegister>,
+        element: <PrivateRoutes><PaymentToRegister></PaymentToRegister></PrivateRoutes>,
         loader: ({params}) => fetch(`http://localhost:5000/contests/${params.id}`),
       },
       {
@@ -113,19 +114,20 @@ const Router = createBrowserRouter([
       // user routes
       {
         path: "userHome",
-        element: <UserHome></UserHome>,
+        element: <PrivateRoutes><UserHome></UserHome></PrivateRoutes>,
       },
       {
         path: "myProfile",
-        element: <MyProfile></MyProfile>,
+        element: <PrivateRoutes><MyProfile></MyProfile></PrivateRoutes>,
       },
+
       {
         path: "participateContest",
-        element: <ParticipateContest></ParticipateContest>,
+        element: <PrivateRoutes><ParticipateContest></ParticipateContest></PrivateRoutes>,
       },
       {
         path: "winingContest",
-        element: <WiningContest></WiningContest>,
+        element: <PrivateRoutes><WiningContest></WiningContest></PrivateRoutes>,
       },
     ],
   },

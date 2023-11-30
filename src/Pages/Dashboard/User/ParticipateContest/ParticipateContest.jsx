@@ -1,20 +1,13 @@
 import { useState } from "react";
-import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import useParticipateContest from "../../../../Hooks/useParticipateContest";
 import useAuth from "../../../../Hooks/useAuth";
-import { useQuery } from "@tanstack/react-query";
+import { PulseLoader } from "react-spinners";
 
 const ParticipateContest = () => {
-  const axiosSecure = useAxiosSecure();
-  const { user, loading } = useAuth();
+  
+  const{loading} =useAuth();
 
-  const { data: items = [] } = useQuery({
-    queryKey: ["participates", user?.email],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/participates?email=${user?.email}`);
-      console.log(res.data);
-      return res.data;
-    },
-  });
+  const [items] = useParticipateContest();
 
   const [view, setView] = useState("all");
 
@@ -29,8 +22,8 @@ const ParticipateContest = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center w-2/5 mx-auto h-[100vh]">
-        <img src="https://i.ibb.co/0sDxQzn/drawing-2802.gif" alt="" />
+      <div className="flex items-center justify-center h-screen">
+        <PulseLoader color="#1786F9" loading={loading} size={30} />
       </div>
     );
   }

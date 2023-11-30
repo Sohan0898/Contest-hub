@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { updateProfile } from "firebase/auth";
 import useAuth from "../../Hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
 import SensorOccupiedIcon from "@mui/icons-material/SensorOccupied";
@@ -15,7 +14,7 @@ import toast from "react-hot-toast";
 import useImgbbApi from "../../Hooks/useImgbbApi";
 
 const Register = () => {
-  const { signUpWithEmail } = useAuth();
+  const { signUpWithEmail,updateUserProfile } = useAuth();
   const axiosPublic = useAxiosPublic();
   const imgbbApi = useImgbbApi();
 
@@ -69,13 +68,14 @@ const Register = () => {
           "content-type": "multipart/form-data",
         },
       });
-      console.log("with image url", res.data);
+      console.log("with image url", res?.data?.data?.display_url);
 
-      // Update user profile
-      await updateProfile(result?.user, {
-        displayName: data?.name,
-        photoURL: res?.data?.data?.display_url,
-      });
+      const imageUrl = res?.data?.data?.display_url;
+
+      updateUserProfile(data.name,imageUrl)
+      .then(() => {
+        console.log('Updated profile');
+      })
 
       // create user entry in the database
       const userInfo = {
@@ -175,13 +175,6 @@ const Register = () => {
                       Photo URL
                     </label>
                     <div className="mt-2.5">
-                      {/* <input
-                        type="text"
-                        name="photo"
-                        placeholder="Enter your photoURL"
-                        className={`block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border  rounded-md focus:outline-none focus:border-blue-600 caret-blue-600`}
-                        {...register("photo")}
-                      /> */}
                       <input
                         {...register("image", { required: true })}
                         type="file"

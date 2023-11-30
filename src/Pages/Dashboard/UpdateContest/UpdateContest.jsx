@@ -19,6 +19,7 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import dayjs from "dayjs";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const UpdateContest = () => {
   const { name, prize, tag, description, date, image, task, price, _id } =
@@ -94,6 +95,9 @@ const UpdateContest = () => {
 
   return (
     <div className="mt-8">
+      <Helmet>
+        <title>Contest Hub | Dashboard| Update Contest </title>
+      </Helmet>
       <h1 className="text-4xl text-center font-bold text-third">
         Please Update <span className="text-red-600">{name} .</span>
       </h1>

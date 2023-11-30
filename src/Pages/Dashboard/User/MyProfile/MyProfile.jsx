@@ -6,6 +6,7 @@ import useImgbbApi from "../../../../Hooks/useImgbbApi";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { WinPercentage } from "./WinPercentage";
+import { Helmet } from "react-helmet-async";
 
 const MyProfile = () => {
   const { user, updateUserProfile } = useAuth();
@@ -58,7 +59,9 @@ const MyProfile = () => {
   return (
     <div className="flex justify-center gap-10 items-center px-1 py-5 my-8">
       {/* Show win percentage */}
-
+      <Helmet>
+        <title>Contest Hub | Dashboard| My Profile </title>
+      </Helmet>
       <div className="w-3/6">
         <WinPercentage></WinPercentage>
       </div>

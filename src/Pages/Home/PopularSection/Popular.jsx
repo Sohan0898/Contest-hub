@@ -34,8 +34,12 @@ const Popular = () => {
   const top6UniqueContests = uniqueContests.slice(0, 6);
 
   return (
-    <div>
-      <div className="grid grid-cols-3  gap-10 max-w-screen-2xl mx-auto px-6 md:px-10 lg:px-16 mt-10">
+    <div className="max-w-screen-2xl mx-auto px-6 md:px-10 lg:px-16 py-6 mt-10">
+
+        <div><h1 className="text-3xl mt-4 font-semibold text-center "><span className="text-5xl font-bold uppercase text-secondary leading-relaxed">Bringing Dreams to Reality:</span> <br />The Contest-Hub Innovation Popular Contest </h1></div>
+
+      <div className="grid grid-cols-1 my-16 md:grid-cols-2 lg:grid-cols-3  gap-10 ">
+      
         {top6UniqueContests.map((contestName, index) => {
           // macth dupilicat contest
           const matchedContest = paidContests?.find(
@@ -51,6 +55,9 @@ const Popular = () => {
         //   console.log("match for id ", matchedApprovedContest);
 
           return (
+
+            
+
             <PopularCard
               key={index}
               contest={matchedContest}

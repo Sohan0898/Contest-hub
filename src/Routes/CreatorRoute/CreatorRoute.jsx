@@ -21,7 +21,7 @@ const CreatorRoute = ({ children }) => {
         return children;
     }
 
-    return <Navigate to="/" state={{ from: location }} replace></Navigate>
+    return <Navigate state={location.pathname} to="/login"></Navigate>
 
 };
 

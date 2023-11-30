@@ -1,6 +1,7 @@
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import toast from "react-hot-toast";
 import { FaTrashAlt, FaUserEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
@@ -67,6 +68,9 @@ const AllUser = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Contest Hub | Dashboard| Manage User </title>
+      </Helmet>
       <div className="my-4 mt-10">
         <h2 className="text-3xl font-bold ">Total Users: {user?.length}</h2>
       </div>

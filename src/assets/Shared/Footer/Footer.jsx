@@ -1,3 +1,6 @@
+
+import logo from '../../../../public/fabicon.png' ;
+
 const Footer = () => {
   return (
     <div>
@@ -7,12 +10,12 @@ const Footer = () => {
             <div className="xl:flex xl:items-center xl:justify-start">
               <img
                 className="w-auto mx-auto h-7"
-                src="https://cdn.rareblocks.xyz/collection/celebration/images/logo-alt-2.svg"
+                src={logo}
                 alt=""
               />
 
-              <p className="mt-5 text-sm text-white xl:ml-6 xl:mt-0">
-                © Copyright 2021 Postcraft
+              <p className="mt-5 text-xl font-bold uppercase text-white xl:ml-1 xl:mt-0">
+                Contest Hub
               </p>
             </div>
 

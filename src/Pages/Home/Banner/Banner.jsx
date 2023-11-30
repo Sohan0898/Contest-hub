@@ -13,7 +13,7 @@ const Banner = () => {
     const fetchContestSuggestions = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/contests/search?query=${searchQuery}`
+          `https://contest-hub-server-opal.vercel.app/contests/search?query=${searchQuery}`
         );
         const data = await response.json();
         console.log(data);

@@ -2,6 +2,7 @@ import { useState } from "react";
 import useParticipateContest from "../../../../Hooks/useParticipateContest";
 import useAuth from "../../../../Hooks/useAuth";
 import { PulseLoader } from "react-spinners";
+import { Helmet } from "react-helmet-async";
 
 const ParticipateContest = () => {
   
@@ -30,6 +31,9 @@ const ParticipateContest = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Contest Hub | Dashboard| Participated Contest </title>
+      </Helmet>
       <div>
         <div className="my-4 mt-10 flex justify-between items-center ">
           <h2 className="text-3xl font-bold">

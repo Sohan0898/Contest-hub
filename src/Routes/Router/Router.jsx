@@ -23,10 +23,9 @@ import UpdateContest from "../../Pages/Dashboard/UpdateContest/UpdateContest";
 import AllContest from "../../Pages/AllContest/AllContest";
 import ContestDetails from "../../Pages/ContestDetails/ContestDetails";
 import PaymentToRegister from "../../Pages/PaymentToRegister/PaymentToRegister";
-import Blog from "../../Pages/Blog/Blog";
 
-
-
+import ExtraOne from "../../Pages/ExtraPageOne/ExtraOne";
+import ExtraTwo from "../../Pages/ExtraPageTwo/ExtraTwo";
 
 const Router = createBrowserRouter([
   {
@@ -45,12 +44,22 @@ const Router = createBrowserRouter([
       {
         path: "/contestDetails/:id",
         element: <ContestDetails></ContestDetails>,
-        loader: ({params}) => fetch(`http://localhost:5000/contests/${params.id}`),
+        loader: ({ params }) =>
+          fetch(
+            `https://contest-hub-server-opal.vercel.app/contests/${params.id}`
+          ),
       },
       {
         path: "paymentToRegister/:id",
-        element: <PrivateRoutes><PaymentToRegister></PaymentToRegister></PrivateRoutes>,
-        loader: ({params}) => fetch(`http://localhost:5000/contests/${params.id}`),
+        element: (
+          <PrivateRoutes>
+            <PaymentToRegister></PaymentToRegister>
+          </PrivateRoutes>
+        ),
+        loader: ({ params }) =>
+          fetch(
+            `https://contest-hub-server-opal.vercel.app/contests/${params.id}`
+          ),
       },
       {
         path: "register",
@@ -61,8 +70,12 @@ const Router = createBrowserRouter([
         element: <Login></Login>,
       },
       {
-        path: "blog",
-        element: <Blog></Blog>,
+        path: "one",
+        element: <ExtraOne></ExtraOne>,
+      },
+      {
+        path: "two",
+        element: <ExtraTwo></ExtraTwo>,
       },
     ],
   },
@@ -71,63 +84,117 @@ const Router = createBrowserRouter([
 
   {
     path: "dashboard",
-    element: <PrivateRoutes><DashBoard></DashBoard></PrivateRoutes>,
+    element: (
+      <PrivateRoutes>
+        <DashBoard></DashBoard>
+      </PrivateRoutes>
+    ),
     children: [
-
       // admin routes
       {
         path: "adminHome",
-        element: <AdminRoute><AdminHome></AdminHome></AdminRoute>,
+        element: (
+          <AdminRoute>
+            <AdminHome></AdminHome>
+          </AdminRoute>
+        ),
       },
       {
         path: "allUser",
-        element: <AdminRoute><AllUser></AllUser></AdminRoute>,
+        element: (
+          <AdminRoute>
+            <AllUser></AllUser>
+          </AdminRoute>
+        ),
       },
       {
         path: "manageContest",
-        element: <AdminRoute><ManageContest></ManageContest></AdminRoute>,
+        element: (
+          <AdminRoute>
+            <ManageContest></ManageContest>
+          </AdminRoute>
+        ),
       },
       {
         path: "updateContest/:id",
-        element: <PrivateRoutes><UpdateContest></UpdateContest></PrivateRoutes>,
-        loader: ({params}) => fetch(`http://localhost:5000/contests/${params.id}`),
+        element: (
+          <PrivateRoutes>
+            <UpdateContest></UpdateContest>
+          </PrivateRoutes>
+        ),
+        loader: ({ params }) =>
+          fetch(
+            `https://contest-hub-server-opal.vercel.app/contests/${params.id}`
+          ),
       },
 
       //creator routes
       {
         path: "creatorHome",
-        element: <CreatorRoute><CreatorHome></CreatorHome></CreatorRoute>,
+        element: (
+          <CreatorRoute>
+            <CreatorHome></CreatorHome>
+          </CreatorRoute>
+        ),
       },
       {
         path: "addContest",
-        element: <CreatorRoute><AddContest></AddContest></CreatorRoute>,
+        element: (
+          <CreatorRoute>
+            <AddContest></AddContest>
+          </CreatorRoute>
+        ),
       },
       {
         path: "createdContest",
-        element: <CreatorRoute><CreatedContest></CreatedContest></CreatorRoute>,
+        element: (
+          <CreatorRoute>
+            <CreatedContest></CreatedContest>
+          </CreatorRoute>
+        ),
       },
       {
         path: "contestSubmitted",
-        element: <CreatorRoute><ContestSubmitted></ContestSubmitted></CreatorRoute>,
+        element: (
+          <CreatorRoute>
+            <ContestSubmitted></ContestSubmitted>
+          </CreatorRoute>
+        ),
       },
 
       // user routes
       {
         path: "userHome",
-        element: <PrivateRoutes><UserHome></UserHome></PrivateRoutes>,
+        element: (
+          <PrivateRoutes>
+            <UserHome></UserHome>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "myProfile",
-        element: <PrivateRoutes><MyProfile></MyProfile></PrivateRoutes>,
+        element: (
+          <PrivateRoutes>
+            <MyProfile></MyProfile>
+          </PrivateRoutes>
+        ),
       },
 
       {
         path: "participateContest",
-        element: <PrivateRoutes><ParticipateContest></ParticipateContest></PrivateRoutes>,
+        element: (
+          <PrivateRoutes>
+            <ParticipateContest></ParticipateContest>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "winingContest",
-        element: <PrivateRoutes><WiningContest></WiningContest></PrivateRoutes>,
+        element: (
+          <PrivateRoutes>
+            <WiningContest></WiningContest>
+          </PrivateRoutes>
+        ),
       },
     ],
   },

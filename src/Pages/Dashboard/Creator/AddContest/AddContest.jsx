@@ -15,6 +15,7 @@ import useAuth from "../../../../Hooks/useAuth";
 import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
 import useImgbbApi from "../../../../Hooks/useImgbbApi";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const AddContest = () => {
   const imgbbApi = useImgbbApi();
@@ -79,6 +80,9 @@ const AddContest = () => {
 
   return (
     <div className="mt-8">
+      <Helmet>
+        <title>Contest Hub | Dashboard| Add Contest </title>
+      </Helmet>
       <h1 className="text-4xl text-center font-bold text-third">
         Please Add Your Contest
       </h1>

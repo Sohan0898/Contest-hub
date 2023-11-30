@@ -6,6 +6,7 @@ import useAuth from "../../../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const CreatedContest = () => {
   const axiosSecure = useAxiosSecure();
@@ -54,6 +55,9 @@ const CreatedContest = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Contest Hub | Dashboard| Created Contest </title>
+      </Helmet>
       <div className="my-4 mt-10">
         <h2 className="text-3xl font-bold ">
           Your Total Added Contest: {items.length}

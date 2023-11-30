@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import useAuth from "../../../../Hooks/useAuth";
 import useParticipateContest from "../../../../Hooks/useParticipateContest";
 import { PulseLoader } from "react-spinners";
@@ -18,6 +19,9 @@ const WiningContest = () => {
     return (
 
         <div>
+            <Helmet>
+        <title>Contest Hub | Dashboard| Wining Contest </title>
+      </Helmet>
             <section className="py-10 bg-gray-50 sm:py-16 lg:py-24">
     <div className="max-w-screen-2xl mx-auto ">
         <div className="max-w-2xl mx-auto text-center">

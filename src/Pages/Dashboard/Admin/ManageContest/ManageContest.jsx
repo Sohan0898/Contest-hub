@@ -6,6 +6,7 @@ import { MdOutlineTaskAlt } from "react-icons/md";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const ManageContest = () => {
   const axiosSecure = useAxiosSecure();
@@ -51,6 +52,9 @@ const ManageContest = () => {
   };
   return (
     <div>
+      <Helmet>
+        <title>Contest Hub | Dashboard| Manage Contest </title>
+      </Helmet>
       <div className="my-4 mt-10">
         <h2 className="text-3xl font-bold ">All Contest: {items?.length}</h2>
       </div>

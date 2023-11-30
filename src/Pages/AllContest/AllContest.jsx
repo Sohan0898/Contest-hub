@@ -5,6 +5,7 @@ import ContestTab from "./ContestTab";
 import { Link } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import useContest from "../../Hooks/useContest";
+import { Helmet } from "react-helmet-async";
 
 const AllContest = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -28,6 +29,9 @@ const AllContest = () => {
 
   return (
     <div className="max-w-screen-2xl mx-auto px-6 md:px-10 lg:px-16">
+      <Helmet>
+        <title>Contest Hub | Our Contest </title>
+      </Helmet>
       <div>
         <section className="bg-gray-50 rounded mt-5 py-12">
           <div className="">

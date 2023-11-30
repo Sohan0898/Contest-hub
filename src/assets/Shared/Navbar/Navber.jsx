@@ -141,7 +141,7 @@ function Navber() {
           </li>
           <li>
             <NavLink
-              to="/blog"
+              to="/one"
               className={({ isActive, isPending }) =>
                 isPending
                   ? "pending"
@@ -150,7 +150,21 @@ function Navber() {
                   : ""
               }
             >
-              Blog
+               Participate Progress
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/two"
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? "pending"
+                  : isActive
+                  ? "font-semibold"
+                  : ""
+              }
+            >
+               Our Roadmap
             </NavLink>
           </li>
         

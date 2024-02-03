@@ -49,7 +49,7 @@ const ContestDetails = () => {
                 <div className="absolute w-full h-full overflow-hidden left-12 xl:left-16 lg:top-0 lg:scale-y-105 lg:origin-top">
                   <img
                     className="object-cover rounded-md shadow opacity-80 object-right w-[600px] h-[480px] scale-150"
-                    src="https://i.ibb.co/c13P2Br/yyuu14.jpg"
+                    src="https://i.postimg.cc/dtG0hCrM/Untitled-design.jpg"
                     alt=""
                   />
                 </div>

@@ -50,7 +50,7 @@ const SoicalLogin = () => {
                   onClick={handleGoogleSignIn}
                   className="relative inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-gray-700 transition-all duration-200 bg-white border-2 border-gray-200 rounded-md hover:bg-gray-100 focus:bg-gray-100 hover:text-black focus:text-black focus:outline-none"
                 >
-                  <span className="mr-2"><img className="w-6" src="https://i.ibb.co/TT9y98j/icons8-google-48-1.png" alt="" /></span> Google 
+                  <span className="mr-2"><img className="w-6" src="https://i.postimg.cc/056M2Lr4/icons8-google-480.png" alt="" /></span> Google 
                 </button>
               </div>
         </div>

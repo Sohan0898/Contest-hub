@@ -61,7 +61,7 @@ const Banner = () => {
         className="hero min-h-screen"
         style={{
           backgroundImage:
-            "url(https://i.ibb.co/vdvRfN2/Untitled-design-6.png)",
+            "url(https://i.postimg.cc/fTjP3qrc/Untitled-design-6.png)",
         }}
       >
         <div className="hero-overlay bg-opacity-60 bg-gradient-to-b from-third to-[#12121200]"></div>

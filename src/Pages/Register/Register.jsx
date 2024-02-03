@@ -14,7 +14,7 @@ import toast from "react-hot-toast";
 import useImgbbApi from "../../Hooks/useImgbbApi";
 
 const Register = () => {
-  const { signUpWithEmail,updateUserProfile } = useAuth();
+  const { signUpWithEmail, updateUserProfile } = useAuth();
   const axiosPublic = useAxiosPublic();
   const imgbbApi = useImgbbApi();
 
@@ -72,10 +72,9 @@ const Register = () => {
 
       const imageUrl = res?.data?.data?.display_url;
 
-      updateUserProfile(data.name,imageUrl)
-      .then(() => {
-        console.log('Updated profile');
-      })
+      updateUserProfile(data.name, imageUrl).then(() => {
+        console.log("Updated profile");
+      });
 
       // create user entry in the database
       const userInfo = {
@@ -114,7 +113,7 @@ const Register = () => {
         className="hero min-h-screen "
         style={{
           backgroundImage:
-            "url(https://i.ibb.co/XXrHVtP/Untitled-design-8.png)",
+            "url(https://i.postimg.cc/TPGgKQBD/Untitled-design-8.png)",
         }}
       >
         <div className="hero-overlay bg-opacity-40"></div>
@@ -123,7 +122,7 @@ const Register = () => {
           <div>
             <img
               className="lg:w-3/4 hidden lg:flex "
-              src="https://i.ibb.co/Jrhh5DQ/Untitled-Instagram-Post.png"
+              src="https://i.postimg.cc/9XvpWPXG/Untitled-Instagram-Post.png"
               alt=""
             />
           </div>

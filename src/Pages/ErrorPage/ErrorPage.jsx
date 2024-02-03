@@ -9,7 +9,7 @@ const ErrorPage = () => {
     <section className='bg-white '>
       <div className='container flex items-center min-h-screen px-6 py-12 mx-auto'>
         <div className='flex flex-col items-center max-w-sm lg:max-w-2xl mx-auto text-center'>
-          <img className="lg:w-[750px] lg:h-[360px]" src="https://i.ibb.co/gmKsgmQ/Untitled-1080-x-600-px-1.gif" alt="" />
+          <img className="lg:w-[750px] lg:h-[360px]" src="https://i.postimg.cc/zXkZYQzb/Untitled-1080-x-600-px-1.gif" alt="" />
           <p className='mt-4 text-gray-500 '>Here are some helpful links:</p>
 
           <div className='flex items-center w-full mt-4 gap-x-3 shrink-0 sm:w-auto'>

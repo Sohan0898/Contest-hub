@@ -102,7 +102,7 @@ const AllUser = () => {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td className="font-semibold text-green-700">
-                  {user.role.toUpperCase()}
+                  {user.role}
                 </td>
 
                 <td>

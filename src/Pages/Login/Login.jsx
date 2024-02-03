@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-
-
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -41,15 +39,17 @@ const Login = () => {
 
       console.log(result.user);
       reset();
-      toast.success(`${result?.user?.displayName.split(/\s+/)
-      .slice(0, 1)
-      .join(" ")} has successfully signed`);
+      toast.success(
+        `${result?.user?.displayName
+          .split(/\s+/)
+          .slice(0, 1)
+          .join(" ")} has successfully signed`
+      );
       navigate(location?.state ? location?.state : "/");
     } catch (error) {
       console.error(error);
       toast.error(error.message);
       setError("password", { type: "manual", message: error.message });
-
     }
   };
 
@@ -59,20 +59,20 @@ const Login = () => {
         <title>Contest Hub | Sign In</title>
       </Helmet>
       <GoHome></GoHome>
-      <section className="bg-white max-w-screen-2xl mx-auto px-6 md:px-10 lg:px-16 py-5 my-10">
+      <section className="bg-gray-100 max-w-screen-2xl mx-auto px-6 md:px-10 lg:px-16 py-5 my-10">
         <div className="grid grid-cols-1 lg:grid-cols-2">
           <div className="relative flex items-end px-4 pb-10 pt-60 sm:pb-16 md:justify-center lg:pb-24 sm:px-6 lg:px-8">
             <div className="absolute inset-0">
               <img
                 className="object-cover object-top w-full h-full mt-4  "
-                src="https://i.ibb.co/nPPRc5p/Untitled-Instagram-Post-1.png"
+                src="https://i.postimg.cc/bvzpD2gJ/Untitled-Instagram-Post-1.png"
                 alt=""
               />
             </div>
           </div>
 
-          <div className="flex items-center justify-center px-4 py-10   sm:px-6 lg:px-8 sm:py-16 lg:py-24">
-            <div className="xl:w-full  xl:max-w-sm 2xl:max-w-md xl:mx-auto p-10 rounded-md border">
+          <div className="flex items-center justify-center px-4 py-10  sm:px-6 lg:px-8 sm:py-16 lg:py-24">
+            <div className="xl:w-full bg-gray-50  xl:max-w-sm 2xl:max-w-md xl:mx-auto p-10 rounded-md border">
               <h2 className="text-3xl  font-bold leading-normal  text-black">
                 Sign in <span className="text-secondary"> CONTEST HUB</span>
               </h2>
@@ -158,14 +158,22 @@ const Login = () => {
                       </p>
                     )}
                   </div>
-
+                  <div>
+                    <h1 className="text-sm font-bold text-red-600 mt-3">
+                      *Demo Account :
+                    </h1>
+                    <p className="text-sm text-gray-400">
+                      Admin-- contest@hub.com : 123456A@
+                    </p>
+                    <p className="text-sm text-gray-400">Creator-- creator@hub.com : 123456A@</p>
+                  </div>
                   <div>
                     <button
                       type="submit"
                       className="mt-4 inline-flex items-center justify-center w-full px-4 py-4 text-base font-bold  transition-all duration-200 border border-transparent rounded-md bg-gradient-to-l from-primary to-secondary  focus:outline-none hover:opacity-70 focus:opacity-70"
                     >
-                        <LoginIcon />
-                      <span className="ml-2">Sign In</span> 
+                      <LoginIcon />
+                      <span className="ml-2">Sign In</span>
                     </button>
                   </div>
                 </form>

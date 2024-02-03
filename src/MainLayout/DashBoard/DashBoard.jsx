@@ -45,7 +45,7 @@ const DashBoard = () => {
       </Helmet>
       <div className="flex">
         {/* dashboard side bar */}
-        <div className="w-20 md:w-40 lg:w-64 min-h-screen bg-third lg:fixed ">
+        <div className="w-20 md:w-40 lg:w-64 min-h-screen bg-third">
           <div className=" flex items-center justify-center mt-8">
             <img
               className="h-9 md:h-6 lg:h-9  lg:flex mr-1"
@@ -156,7 +156,7 @@ const DashBoard = () => {
         </div>
 
         {/* dashboard content */}
-        <div className="flex-1 lg:ml-64 px-8 py-5 bg-gray-300">
+        <div className="flex-1 px-8 py-5 bg-gray-300">
           <div className="w-full h-16 md:h-10 lg:h-16 bg-third shadow-md rounded "></div>
 
           {/* dashboard content */}
